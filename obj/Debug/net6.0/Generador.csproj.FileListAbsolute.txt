@@ -1,0 +1,15 @@
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.csproj.AssemblyReference.cache
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.AssemblyInfoInputs.cache
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.AssemblyInfo.cs
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.csproj.CoreCompileInputs.cache
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\bin\Debug\net6.0\Generador.exe
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\bin\Debug\net6.0\Generador.deps.json
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\bin\Debug\net6.0\Generador.runtimeconfig.json
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\bin\Debug\net6.0\Generador.dll
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\bin\Debug\net6.0\ref\Generador.dll
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\bin\Debug\net6.0\Generador.pdb
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.dll
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\ref\Generador.dll
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.pdb
+C:\Users\user\Downloads\PAOLA TAREAS RESPALDOS\Generador\obj\Debug\net6.0\Generador.genruntimeconfig.cache

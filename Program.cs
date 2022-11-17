@@ -9,9 +9,9 @@ namespace Generador
         {
             try
             {
-                using(Lenguaje a = new Lenguaje ())
+                using(Lenguaje a = new Lenguaje ("c2.gram"))
                 {
-
+                    a.Gramatica();
                 }
             }
             catch (Exception e)

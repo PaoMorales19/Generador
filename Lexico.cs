@@ -6,12 +6,17 @@ namespace Generador
     {
         protected StreamReader archivo;
         protected StreamWriter log;
-        protected StreamWriter asm;
         const int F = -1;
         const int E = -2;
         protected int linea, posicion = 0;
         int[,] TRAND = new int[,]
         {
+            {0, 1, 5, 3, 4, 5},
+            {F, F, 2, F, F, F},
+            {F, F, F, F, F, F},
+            {F, F, F, 3, F, F},
+            {F, F, F, F, F, F},
+            {F, F, F, F, F, F},
             
         };
         public Lexico()
@@ -22,6 +27,7 @@ namespace Generador
             bool existencia = File.Exists(path);
             log = new StreamWriter("c.Log");
 
+            log.WriteLine("Archiivo: c.gram");
             log.AutoFlush = true;
             if (existencia == true)
             {
@@ -45,9 +51,6 @@ namespace Generador
             log.WriteLine("Archivo: " + nombre);
             log.WriteLine(DateTime.Now);
 
-            asm.WriteLine(";Archivo: " + nombre);
-            asm.WriteLine(";Fecha: " + DateTime.Now);
-
             if (File.Exists(nombre))
             {
                 archivo = new StreamReader(nombre);
@@ -61,16 +64,53 @@ namespace Generador
         {
             archivo.Close();
             log.Close();
-            asm.Close();
         }
 
         private void clasifica(int estado)
         {
+            switch(estado)
+            {
+                case 1:
+                    setClasificacion(Tipos.ST);
+                    break;
+                case 2:
+                    setClasificacion(Tipos.Produce);
+                    break;
+                case 3:
+                    setClasificacion(Tipos.SNT);
+                    break;
+                case 4:
+                    setClasificacion(Tipos.FinProduccion);
+                    break;
+                case 5:
+                    setClasificacion(Tipos.ST);
+                    break;
+            }
             
         }
-        private int columna(char c)
+        private int columna(char c) //Ubicar el caracter en la columna de la matriz
         {
-            return 0;
+            if (c == 10)
+            {
+                return 4;
+            }
+            else if(char.IsWhiteSpace(c))
+            {
+                return 0;
+            }
+            else if(c == '-')
+            {
+                return 1;
+            }
+            else if(c == '>')
+            {
+                return 2;
+            }
+            else if (char.IsLetter(c))
+            {
+                return 3;
+            }
+            return 5;
         }
         //WS,EF,EL,L, D, .,	E, +, -, =,	:, ;, &, |,	!, >, <, *,	%, /, ", ?,La, ', #
         public void NextToken()

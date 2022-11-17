@@ -1,4 +1,4 @@
-Gramatica c; {
+Gramatica c:
     Programa  -> Librerias? Variables? Main
     Librerias -> #include<identificador(.h)?> Librerias?
     Variables -> tipo_dato Lista_identificadores; Variables?
@@ -23,4 +23,3 @@ Gramatica c; {
     Termino -> Factor PorFactor
     PorFactor -> (OperadorFactor Factor)? 
     Factor -> numero | identificador | (Expresion)
- }
