@@ -1,2 +1,38 @@
 Archivo: c2.gram
-16/11/2022 11:18:00 p. m.
+19/11/2022 08:57:06 p. m.
+Gramatica SNT
+: ST
+c SNT
+
+ FinProduccion
+Programa SNT
+-> Produce
+# ST
+Identificador SNT
+, ST
+Numero SNT
+Librerias SNT
+
+ FinProduccion
+Librerias SNT
+-> Produce
+# ST
+include SNT
+< ST
+Identificador SNT
+. ST
+h SNT
+> ST
+
+ FinProduccion
+Variables SNT
+-> Produce
+( ST
+) ST
+
+ FinProduccion
+ListaIdentificadores SNT
+-> Produce
+Caracter SNT
+
+ FinProduccion

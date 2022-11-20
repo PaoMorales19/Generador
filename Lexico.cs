@@ -6,6 +6,8 @@ namespace Generador
     {
         protected StreamReader archivo;
         protected StreamWriter log;
+        protected StreamWriter lenguaje;
+        protected StreamWriter programa;
         const int F = -1;
         const int E = -2;
         protected int linea, posicion = 0;
@@ -17,7 +19,7 @@ namespace Generador
             {F, F, F, 3, F, F},
             {F, F, F, F, F, F},
             {F, F, F, F, F, F},
-            
+
         };
         public Lexico()
         {
@@ -26,27 +28,38 @@ namespace Generador
             string path = "c.gram";
             bool existencia = File.Exists(path);
             log = new StreamWriter("c.Log");
+            log.AutoFlush = true;
+
+            lenguaje = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Lenguaje.cs");
+            lenguaje.AutoFlush = true;
+
+            programa = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Program.cs");
+            programa.AutoFlush = true;
 
             log.WriteLine("Archiivo: c.gram");
-            log.AutoFlush = true;
+            log.WriteLine(DateTime.Now);
             if (existencia == true)
             {
                 archivo = new StreamReader(path);
             }
             else
             {
-                throw new Error("Error: El archivo prueba no existe", log);
+                throw new Error("Error: El archivo c.gram no existe", log);
             }
         }
         public Lexico(string nombre)
         {
             linea = 1;
-            //log = new streamWriter(nombre.log)
-            //Usar el objeto path
 
             string pathLog = Path.ChangeExtension(nombre, ".log");
             log = new StreamWriter(pathLog);
             log.AutoFlush = true;
+
+            lenguaje = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Lenguaje.cs");
+            lenguaje.AutoFlush = true;
+
+            programa = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Program.cs");
+            programa.AutoFlush = true;
 
             log.WriteLine("Archivo: " + nombre);
             log.WriteLine(DateTime.Now);
@@ -64,11 +77,13 @@ namespace Generador
         {
             archivo.Close();
             log.Close();
+            lenguaje.Close();
+            programa.Close();
         }
 
         private void clasifica(int estado)
         {
-            switch(estado)
+            switch (estado)
             {
                 case 1:
                     setClasificacion(Tipos.ST);
@@ -86,7 +101,7 @@ namespace Generador
                     setClasificacion(Tipos.ST);
                     break;
             }
-            
+
         }
         private int columna(char c) //Ubicar el caracter en la columna de la matriz
         {
@@ -94,15 +109,15 @@ namespace Generador
             {
                 return 4;
             }
-            else if(char.IsWhiteSpace(c))
+            else if (char.IsWhiteSpace(c))
             {
                 return 0;
             }
-            else if(c == '-')
+            else if (c == '-')
             {
                 return 1;
             }
-            else if(c == '>')
+            else if (c == '>')
             {
                 return 2;
             }
@@ -143,11 +158,15 @@ namespace Generador
                 }
             }
             setContenido(buffer);
-            
+
             if (estado == E)
             {
-                
+
                 throw new Error("Error lexico: No definido en linea: " + linea, log);
+            }
+            if (!FinArchivo())
+            {
+                log.WriteLine(getContenido() + " " + getClasificacion());
             }
         }
 
