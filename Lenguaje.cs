@@ -2,38 +2,55 @@ using System;
 using System.Collections.Generic;
 //Ana Paola Morales Anaya
 //Requerimiento 1. Construir un metodo para escribir en el archivo Lenguaje.cs identando el codigo
-//                 "{" incrementa un tabulador, "}" decrementa un tabulador
+//                 "{" incrementa un tabulador, "}" decrementa un tabulador---listo
 //Requerimiento 2. Declarar un atributo "primeraProduccion" de tipo string y actualizarlo con la 
 //                 primera produccion de la gramatica
-//Requerimiento 3. La primera produccion es publica y el resto es privada
+//Requerimiento 3. La primera produccion es publica y el resto es privada---listo
 //Requerimiento 4. El constructor lexico parametrico debe validar que la extensión del archivo a compilar
-                 //sea .gen y sino levantar una exception
+//sea .gen y sino levantar una exception
 //Requerimiento 5. Resolver la ambiguedad de st y snt
 namespace Generador
 {
     public class Lenguaje : Sintaxis, IDisposable
     {
+        int tab;
         public Lenguaje(string nombre) : base(nombre)
         {
-
+            tab = 0;
         }
 
         public Lenguaje()
         {
-
+            tab = 0;
         }
         public void Dispose()
         {
             cerrar();
+        }
+        private void tabulador(string tabCodigo)
+        {
+            if (tabCodigo == "}")
+            {
+                tab--;
+            }
+            for (int i = 0; i < tab; i++)
+            {
+                lenguaje.Write("\t");
+            }
+            if (tabCodigo == "{")
+            {
+                tab++;
+            }
+            lenguaje.WriteLine(tabCodigo);
         }
         public void Gramatica()
         {
             Cabecera();
             Programa("Programa");
             CabeceraLenguaje();
-            ListaProducciones();
-            lenguaje.WriteLine("\t}");
-            lenguaje.WriteLine("}");
+            ListaProducciones(true);
+            tabulador("}");
+            tabulador("}");
         }
         private void Programa(string ProduccionPrincipal)
         {
@@ -75,39 +92,45 @@ namespace Generador
         }
         private void CabeceraLenguaje()
         {
-            lenguaje.WriteLine("using System;");
-            lenguaje.WriteLine("using System.Collections.Generic;");
-
-            lenguaje.WriteLine("namespace Generico");
-            lenguaje.WriteLine("\t{");
-            lenguaje.WriteLine("\tpublic class Lenguaje : Sintaxis, IDisposable");
-            lenguaje.WriteLine("\t{");
-            lenguaje.WriteLine("\t\tpublic Lenguaje(string nombre) : base(nombre)");
-            lenguaje.WriteLine("\t\t{");
-            lenguaje.WriteLine("\t\t}");
-
-            lenguaje.WriteLine("\t\tpublic Lenguaje()");
-            lenguaje.WriteLine("\t\t{");
-            lenguaje.WriteLine("\t\t}");
-            lenguaje.WriteLine("\t\tpublic void Dispose()");
-            lenguaje.WriteLine("\t\t{");
-            lenguaje.WriteLine("\t\t\tcerrar();");
-            lenguaje.WriteLine("\t\t}");
-
+            tabulador("using System;");
+            tabulador("using System.Collections.Generic;");
+            tabulador("namespace Generico");
+            tabulador("{");
+            tabulador("public class Lenguaje : Sintaxis, IDisposable");
+            tabulador("{");
+            tabulador("public Lenguaje(string nombre) : base(nombre)");
+            tabulador("{");
+            tabulador("}");
+            tabulador("public Lenguaje()");
+            tabulador("{");
+            tabulador("}");
+            tabulador("public void Dispose()");
+            tabulador("{");
+            tabulador("cerrar();");
+            tabulador("}");
         }
 
-        private void ListaProducciones()
+        private void ListaProducciones(bool primero)
         {
-            lenguaje.WriteLine("\t\tprivate void " + getContenido() + "()");
-            lenguaje.WriteLine("\t\t{");
+            if (primero)
+            {
+                tabulador("public void " + getContenido() + "()");
+                
+            }
+            else
+            {
+                tabulador("private void " + getContenido() + "()");
+            }
+            primero = false;
+            tabulador("{");
             match(Tipos.SNT);
             match(Tipos.Produce);
             Simbolos();
             match(Tipos.FinProduccion);
-            lenguaje.WriteLine("\t\t}");
+            tabulador("}");
             if (!FinArchivo()) //Para saltar a la siguiente linea
             {
-                ListaProducciones();
+                ListaProducciones(primero);
             }
         }
 
@@ -115,17 +138,17 @@ namespace Generador
         {
             if (esTipo(getContenido()))
             {
-                lenguaje.WriteLine("\t\t\tmatch(Tipos." + getContenido() + ");");
+                tabulador("match(Tipos." + getContenido() + ");");
                 match(Tipos.SNT);
             }
             else if (getClasificacion() == Tipos.ST)
             {
-                lenguaje.WriteLine("\t\t\tmatch(\"" + getContenido() + "\");");
+                tabulador("match(\"" + getContenido() + "\");");
                 match(Tipos.ST);
             }
             else if (getClasificacion() == Tipos.SNT)
             {
-                lenguaje.WriteLine("\t\t\t" + getContenido() + "();");
+                tabulador(getContenido() + "();");
                 match(Tipos.SNT);
             }
             if (getClasificacion() != Tipos.FinProduccion)
@@ -138,7 +161,6 @@ namespace Generador
         {
             switch (Clasificacion)
             {
-
                 case "Identificador":
                 case "Numero":
                 case "Caracter":
