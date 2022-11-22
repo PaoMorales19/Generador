@@ -14,14 +14,17 @@ namespace Generador
     public class Lenguaje : Sintaxis, IDisposable
     {
         int tab;
+        string primeraProduccion;
         public Lenguaje(string nombre) : base(nombre)
         {
             tab = 0;
+            primeraProduccion = "";
         }
 
         public Lenguaje()
         {
             tab = 0;
+            primeraProduccion = "";
         }
         public void Dispose()
         {
@@ -115,7 +118,7 @@ namespace Generador
             if (primero)
             {
                 tabulador("public void " + getContenido() + "()");
-                
+                primeraProduccion = getContenido();
             }
             else
             {

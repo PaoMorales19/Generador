@@ -61,6 +61,11 @@ namespace Generador
             programa = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Program.cs");
             programa.AutoFlush = true;
 
+            string ext = Path.GetExtension(nombre);
+            if(ext != ".gram")
+            {
+                throw new Error("\nError: La extensión del archivo debe ser .gram", log);
+            }
             log.WriteLine("Archivo: " + nombre);
             log.WriteLine(DateTime.Now);
 
