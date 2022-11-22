@@ -7,7 +7,7 @@ using System.Collections.Generic;
 //                 primera produccion de la gramatica
 //Requerimiento 3. La primera produccion es publica y el resto es privada---listo
 //Requerimiento 4. El constructor lexico parametrico debe validar que la extensión del archivo a compilar
-//sea .gen y sino levantar una exception
+//sea .gen y sino levantar una exception---listo
 //Requerimiento 5. Resolver la ambiguedad de st y snt
 namespace Generador
 {
@@ -49,7 +49,8 @@ namespace Generador
         public void Gramatica()
         {
             Cabecera();
-            Programa("Programa");
+            primeraProduccion = getContenido();
+            Programa(primeraProduccion);
             CabeceraLenguaje();
             ListaProducciones(true);
             tabulador("}");
@@ -118,7 +119,6 @@ namespace Generador
             if (primero)
             {
                 tabulador("public void " + getContenido() + "()");
-                primeraProduccion = getContenido();
             }
             else
             {
