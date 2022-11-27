@@ -1,38 +1,12 @@
 Archivo: c2.gram
-27/11/2022 03:34:12 p. m.
+27/11/2022 05:22:05 p. m.
 Gramatica ST
 : ST
 c ST
 
  FinProduccion
 Programa ST
--> Produce
-# ST
-Identificador ST
-, ST
-Numero ST
 Librerias ST
-
- FinProduccion
-Librerias ST
--> Produce
-# ST
-include ST
-< ST
-Identificador ST
-. ST
-h ST
-> ST
-
- FinProduccion
 Variables ST
--> Produce
-\( PIzq
-Identificador ST
-\) PDer
-
- FinProduccion
 ListaIdentificadores ST
--> Produce
-( ST
-) ST
+Programa ST

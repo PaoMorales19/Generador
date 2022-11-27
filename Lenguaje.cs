@@ -10,7 +10,7 @@ using System.Collections.Generic;
 //sea .gen y sino levantar una exception---listo
 //Requerimiento 5. Resolver la ambiguedad de st y snt
 //Requerimiento 6. Agregar el parentesis izquierdoy el parentesis derecho escapado en la matriz de transiciones
-//Requerimiento 7. Implementar el or y la cerradura epsilon
+//Requerimiento 7. Implementar la cerradura epsilon
 namespace Generador
 {
     public class Lenguaje : Sintaxis, IDisposable
@@ -53,6 +53,7 @@ namespace Generador
         }
         public void Gramatica()
         {
+           // AgregarSNT(getContenido());
             Cabecera();
             primeraProduccion = getContenido();
             Programa(primeraProduccion);
@@ -67,6 +68,7 @@ namespace Generador
         }
         private void AgregarSNT(string contenido)
         {
+            //R5
             listaSNT.Add(contenido);
         }
         private void Programa(string ProduccionPrincipal)
@@ -155,8 +157,18 @@ namespace Generador
             if (getContenido() == "\\(")
             {
                 match("\\(");
+                if(esTipo(getContenido()))//Requerimiento 7
+                {
+                    tabulador("if (getClasificacion() == Tipos." + getContenido() + ");");
+                }
+                else
+                {
+                    tabulador("if (getContenido()== \""+getContenido()+"\")");
+                }
+                tabulador("{");
                 Simbolos();
                 match("\\)");
+                tabulador("}");
             }
             else if (esTipo(getContenido()))
             {
