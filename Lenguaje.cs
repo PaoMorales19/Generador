@@ -4,25 +4,30 @@ using System.Collections.Generic;
 //Requerimiento 1. Construir un metodo para escribir en el archivo Lenguaje.cs identando el codigo
 //                 "{" incrementa un tabulador, "}" decrementa un tabulador---listo
 //Requerimiento 2. Declarar un atributo "primeraProduccion" de tipo string y actualizarlo con la 
-//                 primera produccion de la gramatica
+//                 primera produccion de la gramatica---listo
 //Requerimiento 3. La primera produccion es publica y el resto es privada---listo
 //Requerimiento 4. El constructor lexico parametrico debe validar que la extensión del archivo a compilar
 //sea .gen y sino levantar una exception---listo
 //Requerimiento 5. Resolver la ambiguedad de st y snt
+//Requerimiento 6. Agregar el parentesis izquierdoy el parentesis derecho escapado en la matriz de transiciones
+//Requerimiento 7. Implementar el or y la cerradura epsilon
 namespace Generador
 {
     public class Lenguaje : Sintaxis, IDisposable
     {
         int tab;
         string primeraProduccion;
+        List<string> listaSNT;
         public Lenguaje(string nombre) : base(nombre)
         {
+            listaSNT = new List<string>();
             tab = 0;
             primeraProduccion = "";
         }
 
         public Lenguaje()
         {
+            listaSNT = new List<string>();
             tab = 0;
             primeraProduccion = "";
         }
@@ -55,6 +60,14 @@ namespace Generador
             ListaProducciones(true);
             tabulador("}");
             tabulador("}");
+        }
+        private bool esSNT(string contenido)
+        {
+            return listaSNT.Contains(contenido);
+        }
+        private void AgregarSNT(string contenido)
+        {
+            listaSNT.Add(contenido);
         }
         private void Programa(string ProduccionPrincipal)
         {
@@ -90,7 +103,7 @@ namespace Generador
         {
             match("Gramatica");
             match(":");
-            match(Tipos.SNT);
+            match(Tipos.ST);
             match(Tipos.FinProduccion);
 
         }
@@ -126,7 +139,7 @@ namespace Generador
             }
             primero = false;
             tabulador("{");
-            match(Tipos.SNT);
+            match(Tipos.ST);
             match(Tipos.Produce);
             Simbolos();
             match(Tipos.FinProduccion);
@@ -139,22 +152,31 @@ namespace Generador
 
         private void Simbolos()
         {
-            if (esTipo(getContenido()))
+            if (getContenido() == "(")
+            {
+                match("(");
+                tabulador("if ()");
+                tabulador("{");
+                Simbolos();
+                match(")");
+                tabulador("}");
+            }
+            else if (esTipo(getContenido()))
             {
                 tabulador("match(Tipos." + getContenido() + ");");
-                match(Tipos.SNT);
+                match(Tipos.ST);
+            }
+            else if (esSNT(getContenido()))
+            {
+                tabulador(getContenido() + "();");
+                match(Tipos.ST);
             }
             else if (getClasificacion() == Tipos.ST)
             {
                 tabulador("match(\"" + getContenido() + "\");");
                 match(Tipos.ST);
             }
-            else if (getClasificacion() == Tipos.SNT)
-            {
-                tabulador(getContenido() + "();");
-                match(Tipos.SNT);
-            }
-            if (getClasificacion() != Tipos.FinProduccion)
+            if (getClasificacion() != Tipos.FinProduccion && getContenido() != ")")
             {
                 Simbolos();
             }

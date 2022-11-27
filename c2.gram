@@ -1,6 +1,6 @@
 Gramatica: c
     Programa  -> #Identificador, Numero Librerias
     Librerias -> #include<Identificador.h>
-    Variables -> ()
-    ListaIdentificadores -> Caracter
+    Variables -> (Identificador)
+    ListaIdentificadores -> Numero
    
