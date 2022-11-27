@@ -13,12 +13,17 @@ namespace Generador
         protected int linea, posicion = 0;
         int[,] TRAND = new int[,]
         {
-            {0, 1, 5, 3, 4, 5},
-            {F, F, 2, F, F, F},
-            {F, F, F, F, F, F},
-            {F, F, F, 3, F, F},
-            {F, F, F, F, F, F},
-            {F, F, F, F, F, F},
+        //  WS - >  L  EDF La (  )  \
+            
+            {0, 1, 8, 3, 4, 8, 8, 8, 5}, //Estado 0
+            {F, F, 2, F, F, F, F, F, F}, //Estado 1
+            {F, F, F, F, F, F, F, F, F}, //Estado 2
+            {F, F, F, 3, F, F, F, F, F}, //Estado 3
+            {F, F, F, F, F, F, F, F, F}, //Estado 4
+            {F, F, F, F, F, F, 6, 7, F}, //Estado 5
+            {F, F, F, F, F, F, F, F, F}, //Estado 6
+            {F, F, F, F, F, F, F, F, F}, //Estado 7
+            {F, F, F, F, F, F, F, F, F}, //Estado 8
 
         };
         public Lexico()
@@ -105,6 +110,15 @@ namespace Generador
                 case 5:
                     setClasificacion(Tipos.ST);
                     break;
+                case 6:
+                    setClasificacion(Tipos.PIzq);
+                    break;
+                case 7:
+                    setClasificacion(Tipos.PDer);
+                    break;
+                case 8:
+                    setClasificacion(Tipos.ST);
+                    break;
             }
 
         }
@@ -129,6 +143,18 @@ namespace Generador
             else if (char.IsLetter(c))
             {
                 return 3;
+            }
+            else if(c =='\\')
+            {
+                return 8;
+            }  
+            else if(c == '(')
+            {
+                return 6;
+            }
+            else if(c == ')')
+            {
+                return 7;
             }
             return 5;
         }
