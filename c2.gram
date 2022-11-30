@@ -3,3 +3,4 @@ Gramatica: c
     Librerias -> #include<Identificador.h>
     Variables -> \(Identificador\)
     ListaIdentificadores ->  \(void\)
+    coma ->
