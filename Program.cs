@@ -9,7 +9,7 @@ namespace Generador
         {
             try
             {
-                using(Lenguaje a = new Lenguaje ("c2.gram"))
+                using(Lenguaje a = new Lenguaje ())
                 {
                     a.Gramatica();
                 }

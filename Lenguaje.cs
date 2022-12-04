@@ -69,7 +69,7 @@ namespace Generador
         private void AgregarSNT()
         {
             //R5
-            StreamReader archivo = new StreamReader("c2.gram");
+            StreamReader archivo = new StreamReader(direccion);
             //agregar los snt a la listaSNT
             string linea = archivo.ReadLine();
             while (linea != null)
@@ -180,7 +180,7 @@ namespace Generador
                 match("\\(");
                 if(esTipo(getContenido()))//Requerimiento 7
                 {
-                    tabulador("if (getClasificacion() == Tipos." + getContenido() + ");");
+                    tabulador("if (getClasificacion() == Tipos." + getContenido() + ")");
                 }
                 else
                 {

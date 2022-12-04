@@ -8,6 +8,7 @@ namespace Generador
         protected StreamWriter log;
         protected StreamWriter lenguaje;
         protected StreamWriter programa;
+        public string direccion;
         const int F = -1;
         const int E = -2;
         protected int linea, posicion = 0;
@@ -30,9 +31,17 @@ namespace Generador
         {
             //C:\\Users\\HOME\\Documents\\PAOLA TAREAS\\5TO SEMESTRE\\AUTOMATAS II\\UNIDAD 2\\Semantica\\prueba.cpp
             linea = 1;
-            string path = "c.gram";
-            bool existencia = File.Exists(path);
-            log = new StreamWriter("c.Log");
+            string nombre ="";
+            DirectoryInfo di = new DirectoryInfo("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generador");
+            FileInfo[] archivos = di.GetFiles("*.gram");
+
+            foreach (FileInfo archivo in archivos)
+            {
+                nombre = archivo.Name;
+            }
+            string path= direccion = nombre;
+            string pathSinExtension= Path.ChangeExtension(path, null);
+            log = new StreamWriter(pathSinExtension + ".log");
             log.AutoFlush = true;
 
             lenguaje = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Lenguaje.cs");
@@ -41,8 +50,10 @@ namespace Generador
             programa = new StreamWriter("C:\\Users\\user\\Downloads\\PAOLA TAREAS RESPALDOS\\Generico\\Program.cs");
             programa.AutoFlush = true;
 
-            log.WriteLine("Archiivo: c.gram");
+            log.WriteLine("Archivo:"+ pathSinExtension+".gram");
             log.WriteLine(DateTime.Now);
+
+            bool existencia = File.Exists(path);
             if (existencia == true)
             {
                 archivo = new StreamReader(path);
@@ -55,7 +66,6 @@ namespace Generador
         public Lexico(string nombre)
         {
             linea = 1;
-
             string pathLog = Path.ChangeExtension(nombre, ".log");
             log = new StreamWriter(pathLog);
             log.AutoFlush = true;
